@@ -11,6 +11,18 @@ body {
     padding: 20px;
 }
 
+    /* Gradient Background, fargen som ligger i bunnen av siden */
+body::after {
+    content: "";
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 200px; /* Adjust as needed */
+    background: linear-gradient(to top, #12d633, #f4f4f4); /* Denne fargegradienten matcher VilVites nettsidestil. */
+    z-index: -1;
+}
+    
 table {
     border-collapse: collapse;
     background: #fff;
