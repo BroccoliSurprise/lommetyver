@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<title>Hva liker du å bruke penger på?</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    padding: 20px;
+}
+
+table {
+    border-collapse: collapse;
+    background: #fff;
+}
+
+td, th {
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    min-width: 100px;
+}
+
+th {
+    background: #eee;
+}
+
+td.editable {
+    background: #fff;
+}
+
+td.locked {
+    background: #f2f2f2;
+}
+
+td[contenteditable="true"] {
+    outline: 2px solid #4CAF50;
+}
+
+button {
+    margin-top: 10px;
+    padding: 8px 12px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Matbudsjett</h2>
+
+<table id="sheet">
+<thead>
+<tr>
+    <th>Kategori</th>
+    <th>Antall</th>
+    <th>Pris</th>
+    <th>Sum</th>
+</tr>
+</thead>
+
+<tbody id="items"></tbody>
+
+<tr><td colspan="4">&nbsp;</td></tr>
+
+<tr>
+    <td>Antall elever</td>
+    <td id="students" class="editable" contenteditable="true"></td>
+    <td></td><td></td>
+</tr>
+
+<tr><td colspan="4">&nbsp;</td></tr>
+
+<tr>
+    <td>Total kost pr uke</td>
+    <td></td><td></td>
+    <td id="weekly" class="locked"></td>
+</tr>
+
+<tr>
+    <td>Total kost pr mnd</td>
+    <td></td><td></td>
+    <td id="monthly" class="locked"></td>
+</tr>
+
+<tr><td colspan="4">&nbsp;</td></tr>
+
+<tr>
+    <td>Pr elev i mnd</td>
+    <td></td><td></td>
+    <td id="perStudent" class="locked"></td>
+</tr>
+
+</table>
+
+<button onclick="addRow()">➕ Legg til rad</button>
+
+<script>
+const defaultItems = [
+    {name: "Sjokolade", qty: 0, price: 23},
+    {name: "Energidrikk", qty: 0, price: 43},
+    {name: "Is", qty: 0, price: 43},
+    {name: "Kaffe/Iskaffe", qty: 0, price: 43},
+    {name: "Tyggis", qty: 0, price: 16},
+    {name: "Is", qty: 0, price: 43},
+    {name: "V-Bucks", qty: 0, price: 89},
+    {name: "Brus", qty: 0, price: 25},
+    {name: "Skolelunsj", qty: 0, price: 50}
+];
+
+function formatCurrency(n) {
+    return n.toLocaleString('no-NO', {style: 'currency', currency: 'NOK'});
+}
+
+function loadData() {
+    const saved = JSON.parse(localStorage.getItem("items"));
+    return saved || defaultItems;
+}
+
+function saveData(items) {
+    localStorage.setItem("items", JSON.stringify(items));
+    localStorage.setItem("students", document.getElementById("students").innerText || 0);
+}
+
+function render() {
+    const items = loadData();
+    const tbody = document.getElementById("items");
+    tbody.innerHTML = "";
+
+    items.forEach((item, i) => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td contenteditable="true" class="editable">${item.name}</td>
+            <td contenteditable="true" class="editable">${item.qty}</td>
+            <td contenteditable="true" class="editable">${item.price}</td>
+            <td class="locked"></td>
+        `;
+
+        tbody.appendChild(row);
+    });
+
+    document.getElementById("students").innerText =
+        localStorage.getItem("students") || 25;
+
+    attachEvents();
+    calculate();
+}
+
+function attachEvents() {
+    document.querySelectorAll("td.editable").forEach(cell => {
+        cell.oninput = () => {
+            updateFromDOM();
+        };
+    });
+}
+
+function updateFromDOM() {
+    const rows = document.querySelectorAll("#items tr");
+    let items = [];
+
+    rows.forEach(r => {
+        const cells = r.children;
+        items.push({
+            name: cells[0].innerText,
+            qty: parseFloat(cells[1].innerText) || 0,
+            price: parseFloat(cells[2].innerText) || 0
+        });
+    });
+
+    saveData(items);
+    calculate();
+}
+
+function calculate() {
+    let weekly = 0;
+
+    const rows = document.querySelectorAll("#items tr");
+
+    rows.forEach(r => {
+        const qty = parseFloat(r.children[1].innerText) || 0;
+        const price = parseFloat(r.children[2].innerText) || 0;
+
+        const sum = qty * price;
+        r.children[3].innerText = formatCurrency(sum);
+
+        weekly += sum;
+    });
+
+    document.getElementById("weekly").innerText = formatCurrency(weekly);
+
+    const monthly = weekly * 4;
+    document.getElementById("monthly").innerText = formatCurrency(monthly);
+
+    const students = parseFloat(document.getElementById("students").innerText) || 0;
+    const perStudent = students ? monthly / students : 0;
+
+    document.getElementById("perStudent").innerText = formatCurrency(perStudent);
+}
+
+function addRow() {
+    const items = loadData();
+    items.push({name: "Ny vare", qty: 0, price: 0});
+    saveData(items);
+    render();
+}
+
+// Initialize
+render();
+</script>
+
+</body>
+</html>
