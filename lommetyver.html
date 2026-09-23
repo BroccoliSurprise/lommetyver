@@ -106,6 +106,7 @@ button {
 </table>
 
 <button onclick="addRow()">➕ Legg til rad</button>
+<button onclick="resetQuantities()">↺ Nullstill</button>
 
 <script>
 const defaultItems = [
@@ -215,6 +216,16 @@ function addRow() {
     items.push({name: "Ny vare", qty: 0, price: 0});
     saveData(items);
     render();
+}
+
+function resetQuantities() {
+const rows = document.querySelectorAll("#items tr");
+ 
+rows.forEach(row => {
+row.children[1].innerText = "0";
+});
+ 
+updateFromDOM();
 }
 
 // Initialize
