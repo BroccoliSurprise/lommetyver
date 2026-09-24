@@ -6,15 +6,105 @@
 <title>KJØPMER! – øvingsbutikk</title>
 <style>
 :root{--primary-color:#12d633;--secondary-color:#000000;--tertiary-color:#4075ff;--quaternary-color:#ffe000;--quinary-color:#f2784b;--bg:#f4f5f7;--card:#fff;--muted:#667085;--line:#e4e7ec}
-*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--secondary-color)}button,input{font:inherit}button{cursor:pointer}.top{background:var(--quaternary-color);padding:10px 16px;text-align:center;font-weight:900}.header{position:sticky;top:0;z-index:20;background:#fffffff2;backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}.header-inner,.wrap{max-width:1240px;margin:auto;padding:16px}.header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px}.logo{font-size:27px;font-weight:1000}.logo b{color:var(--primary-color);text-shadow:1px 1px #000}.tagline{font-size:12px;color:var(--muted);font-weight:700}.cartbtn,.buy,.checkout{border:0;background:var(--secondary-color);color:white;border-radius:999px;padding:12px 18px;font-weight:900}.cartbtn span{background:var(--primary-color);color:#000;border-radius:999px;padding:2px 7px;margin-left:5px}.hero{background:linear-gradient(115deg,var(--primary-color),var(--tertiary-color));border:3px solid #000;border-radius:26px;padding:28px;box-shadow:7px 7px 0 #000}.hero .eyebrow{font-weight:1000;text-transform:uppercase;letter-spacing:.12em}.hero h1{font-size:clamp(38px,6vw,64px);margin:5px 0}.hero p{font-weight:800}.filters{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0}.filters button{border:2px solid #000;background:#fff;border-radius:999px;padding:9px 15px;font-weight:800}.filters button.active{background:var(--secondary-color);color:#fff}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.card{position:relative;overflow:hidden;background:var(--card);border:2px solid #000;border-radius:20px;box-shadow:4px 4px 0 #000}.badge{position:absolute;left:10px;top:10px;background:var(--quaternary-color);border:2px solid #000;padding:7px 10px;font-weight:1000;transform:rotate(-3deg);z-index:2}.pic{height:145px;display:grid;place-items:center;font-size:68px;background:linear-gradient(135deg,#fff,var(--primary-color))}.info{padding:15px}.cat{font-size:11px;text-transform:uppercase;color:var(--muted);font-weight:900}.name{min-height:44px;margin:4px 0;font-size:18px}.price{font-size:25px;font-weight:1000;color:#075bd8}.old{text-decoration:line-through;color:var(--muted);font-size:13px;margin-left:5px}.urgency{margin:6px 0 13px;color:#9b3f1e;font-size:12px;font-weight:900}.payment{display:grid;gap:8px}.paybox{border:1.5px solid var(--line);border-radius:12px;padding:10px;font-size:13px}.paybox.selected{border:2px solid #000;background:#f7f7f7}.paybox label{font-weight:900}.plans{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}.plan{border:0;border-radius:8px;background:#e9eefc;padding:7px;font-size:11px;font-weight:900}.plan.selected{background:var(--tertiary-color);color:white}.detail{margin-top:8px;background:#eef9f0;border-left:4px solid var(--primary-color);padding:8px;font-size:12px;line-height:1.45}.buy{width:100%;margin-top:14px;background:var(--primary-color);color:#000;border:2px solid #000;border-radius:12px}.notice{margin:28px 0;background:white;border:2px solid #000;border-radius:16px;padding:17px;font-size:12px;color:#475467}.overlay{display:none;position:fixed;inset:0;z-index:40;background:#0007}.overlay.open{display:block}.drawer{margin-left:auto;background:white;width:min(440px,100%);height:100%;padding:20px;display:flex;flex-direction:column}.drawer-head{display:flex;justify-content:space-between;align-items:center}.close{border:0;background:#eee;border-radius:50%;width:38px;height:38px}.cart-items{overflow:auto;flex:1}.item{border:1px solid var(--line);border-radius:12px;padding:12px;margin:8px 0;display:grid;grid-template-columns:38px 1fr auto;gap:8px;align-items:center}.qty button{border:1px solid #bbb;background:#fff;border-radius:6px}.total{border-top:2px solid #000;padding-top:16px;font-size:20px;font-weight:1000;display:flex;justify-content:space-between}.checkout{width:100%;margin-top:13px;background:var(--tertiary-color);border-radius:12px}.small{font-size:11px;color:var(--muted)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--secondary-color)}button,input{font:inherit}button{cursor:pointer}
+.top{
+  position:sticky;
+  top:0;
+  z-index:100;
+  width:100%;
+  overflow:hidden;
+  white-space:nowrap;
+  background:var(--quaternary-color);
+  border-bottom:3px solid #000;
+  padding:9px 0;
+  font-weight:1000;
+}
+
+.top-scroll{
+  display:inline-flex;
+  align-items:center;
+  gap:55px;
+  min-width:max-content;
+  animation:topScroll 15s linear infinite;
+}
+
+.top-scroll span{
+  display:inline-block;
+}
+
+.blink{
+  color:#e60000;
+  animation:blinkText .65s steps(2,start) infinite;
+}
+
+@keyframes topScroll{
+  from{
+    transform:translateX(100vw);
+  }
+  to{
+    transform:translateX(-100%);
+  }
+}
+
+@keyframes blinkText{
+  0%,45%{
+    opacity:1;
+    transform:scale(1);
+  }
+  46%,100%{
+    opacity:.15;
+    transform:scale(1.08);
+  }
+}
+
+.header{position:sticky;top:39px;z-index:20;background:#fffffff2;backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}.header-inner,.wrap{max-width:1240px;margin:auto;padding:16px}.header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{font-size:27px;font-weight:1000}.logo b{color:var(--primary-color);text-shadow:1px 1px #000}.tagline{font-size:12px;color:var(--muted);font-weight:700}.cartbtn,.buy,.checkout{border:0;background:var(--secondary-color);color:white;border-radius:999px;padding:12px 18px;font-weight:900}.cartbtn span{background:var(--primary-color);color:#000;border-radius:999px;padding:2px 7px;margin-left:5px}.hero{background:linear-gradient(115deg,var(--primary-color),var(--tertiary-color));border:3px solid #000;border-radius:26px;padding:28px;box-shadow:7px 7px 0 #000}.hero .eyebrow{font-weight:1000;text-transform:uppercase;letter-spacing:.12em}.hero h1{font-size:clamp(38px,6vw,64px);margin:5px 0}.hero p{font-weight:800}.filters{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0}.filters button{border:2px solid #000;background:#fff;border-radius:999px;padding:9px 15px;font-weight:800}.filters button.active{background:var(--secondary-color);color:#fff}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.card{position:relative;overflow:hidden;background:var(--card);border:2px solid #000;border-radius:20px;box-shadow:4px 4px 0 #000}.badge{position:absolute;left:10px;top:10px;background:var(--quaternary-color);border:2px solid #000;padding:7px 10px;font-weight:1000;transform:rotate(-3deg);z-index:2}.pic{height:145px;display:grid;place-items:center;font-size:68px;background:linear-gradient(135deg,#fff,var(--primary-color))}.info{padding:15px}.cat{font-size:11px;text-transform:uppercase;color:var(--muted);font-weight:900}.name{min-height:44px;margin:4px 0;font-size:18px}.price{font-size:25px;font-weight:1000;color:#075bd8}.old{text-decoration:line-through;color:var(--muted);font-size:13px;margin-left:5px}.urgency{margin:6px 0 13px;color:#9b3f1e;font-size:12px;font-weight:900}.payment{display:grid;gap:8px}.paybox{border:1.5px solid var(--line);border-radius:12px;padding:10px;font-size:13px}.paybox.selected{border:2px solid #000;background:#f7f7f7}.paybox label{font-weight:900}.plans{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}.plan{border:0;border-radius:8px;background:#e9eefc;padding:7px;font-size:11px;font-weight:900}.plan.selected{background:var(--tertiary-color);color:white}.detail{margin-top:8px;background:#eef9f0;border-left:4px solid var(--primary-color);padding:8px;font-size:12px;line-height:1.45}.buy{width:100%;margin-top:14px;background:var(--primary-color);color:#000;border:2px solid #000;border-radius:12px}.notice{margin:28px 0;background:white;border:2px solid #000;border-radius:16px;padding:17px;font-size:12px;color:#475467}.overlay{display:none;position:fixed;inset:0;z-index:40;background:#0007}.overlay.open{display:block}.drawer{margin-left:auto;background:white;width:min(440px,100%);height:100%;padding:20px;display:flex;flex-direction:column}.drawer-head{display:flex;justify-content:space-between;align-items:center}.close{border:0;background:#eee;border-radius:50%;width:38px;height:38px}.cart-items{overflow:auto;flex:1}.item{border:1px solid var(--line);border-radius:12px;padding:12px;margin:8px 0;display:grid;grid-template-columns:38px 1fr auto;gap:8px;align-items:center}.qty button{border:1px solid #bbb;background:#fff;border-radius:6px}.total{border-top:2px solid #000;padding-top:16px;font-size:20px;font-weight:1000;display:flex;justify-content:space-between}.checkout{width:100%;margin-top:13px;background:var(--tertiary-color);border-radius:12px}.small{font-size:11px;color:var(--muted)}
 @media(max-width:980px){.grid{grid-template-columns:repeat(3,1fr)}}@media(max-width:720px){.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:480px){.grid{grid-template-columns:1fr}.header-inner{padding:11px}.hero{padding:20px}.pic{height:125px}}
+.saving{
+  margin-top:10px;
+  background:var(--primary-color);
+  border:2px solid #000;
+  border-radius:12px;
+  padding:10px 12px;
+  font-size:18px;
+  font-weight:1000;
+  display:flex;
+  justify-content:space-between;
+  box-shadow:3px 3px 0 #000;
+}
+
 </style>
 </head>
 <body>
-<div class="top">⚡ SUPERSALG! Begrenset tid • Kjøp nå, tenk senere? ⚡</div>
+<div class="top">
+  <div class="top-scroll">
+    <span>⚡ SUPERSALG! ⚡</span>
+    <span class="blink">BARE NÅ!</span>
+    <span>🔥 PRISENE ER KUTTET!</span>
+    <span class="blink">IKKE VENT!</span>
+    <span>💸 KJØP NÅ – TENK SENERE!</span>
+    <span class="blink">TILBUDET KAN FORSVINNE!</span>
+    <span>⚡ SUPERSALG! ⚡</span>
+  </div>
+</div>
 <header class="header"><div class="header-inner"><div><div class="logo"><b>KJØP</b>MER!</div><div class="tagline">Alt du plutselig trenger.</div></div><button class="cartbtn" id="cartBtn">🛒 Kurv <span id="cartCount">0</span></button></div></header>
-<main class="wrap"><section class="hero"><div class="eyebrow">🔥 Ukens villeste tilbud</div><h1>STORE PRISKUTT!</h1><p>Ikke gå glipp av tilbudene. Nye kupp hele tiden.*</p></section><div class="filters" id="filters"></div><section class="grid" id="products"></section><div class="notice"><b>* Øvingsbutikk:</b> Dette er en simulert nettbutikk laget for undervisning i personlig økonomi. Varer, priser, tilbud, lagerstatus og betalingsløsninger er fiktive. Effektiv rente for delbetaling beregnes ut fra kontantpris, gebyret og like månedlige betalinger. Det er ingen annen nominell rente i denne simuleringen.</div></main>
-<div class="overlay" id="overlay"><aside class="drawer"><div class="drawer-head"><h2>Din handlekurv</h2><button class="close" id="close">✕</button></div><div class="cart-items" id="cartItems"></div><div><div class="total"><span>Total kjøpskostnad</span><span id="total">0 kr</span></div><p class="small">Summen inkluderer valgte gebyrer for betalingsutsettelse eller delbetaling.</p><button class="checkout">GÅ TIL KASSEN</button></div></aside></div>
+<main class="wrap"><section class="hero"><div class="eyebrow">🔥 Ukens villeste tilbud</div><h1>STORE PRISKUTT!</h1><p>Ikke gå glipp av tilbudene. Nye kupp hele tiden.*</p></section><div class="filters" id="filters"></div><section class="grid" id="products"></section><div class="notice"><b>* Øvingsbutikk:</b> Dette er en simulert nettbutikk laget for undervisning i personlig økonomi. Varer, priser, tilbud, lagerstatus og betalingsløsninger er fiktive. Effektiv rente for delbetaling beregnes ut fra kontantpris, gebyret og like månedlige betalinger. For delbetaling over 24 og 36 måneder beregnes rentekostnaden forenklet som kontantpris × årlig rente × antall år. Beregningen tar ikke hensyn til synkende restgjeld og tilsvarer derfor ikke beregningsmetoden for et ordinært annuitetslån.</div></main>
+<div class="overlay" id="overlay"><aside class="drawer"><div class="drawer-head"><h2>Din handlekurv</h2><button class="close" id="close">✕</button></div><div class="cart-items" id="cartItems"></div>
+    <div>
+  <div class="total">
+    <span>Total kjøpskostnad</span>
+    <span id="total">0 kr</span>
+  </div>
+
+  <div class="saving">
+    <span>🔥 DU SPARER</span>
+    <span id="saving">0 kr</span>
+  </div>
+
+  <p class="small">Summen inkluderer valgte gebyrer for betalingsutsettelse eller delbetaling.</p>
+  <button class="checkout">GÅ TIL KASSEN</button>
+</div>
+</aside></div>
 <script>
 const products=[
 {id:1,name:'Nova X mobiltelefon',category:'Elektronikk',price:7490,oldPrice:9490,emoji:'📱',badge:'SPAR 2 000!',urgency:'Få igjen på lager',deferFee:349,plans:[3,6,12]},
@@ -27,23 +117,28 @@ const products=[
 {id:8,name:'Luxe parfyme 100 ml',category:'Skjønnhet',price:1290,oldPrice:1690,emoji:'🧴',badge:'TREND!',urgency:'Mest ønsket denne uken',deferFee:89,plans:[3,6,12]},
 {id:9,name:'Urban ryggsekk',category:'Tilbehør',price:599,oldPrice:799,emoji:'🎒',badge:'-25%',urgency:'Siste sjanse',deferFee:59,plans:[3,6]},
 {id:10,name:'4K Smart-TV 55”',category:'Elektronikk',price:6990,oldPrice:9990,emoji:'📺',badge:'SPAR 3 000!',urgency:'Kun 2 igjen',deferFee:399,plans:[3,6,12]},
-{id:11,name:'Brukt bybil',category:'Bil',price:89900,oldPrice:99900,emoji:'🚗',badge:'10 000 AV!',urgency:'Klar for prøvekjøring',deferFee:2490,plans:[6,12]},
-{id:12,name:'Elbil – kompakt',category:'Bil',price:189900,oldPrice:209900,emoji:'🔋',badge:'PRISKUTT!',urgency:'Kampanje denne uken',deferFee:3990,plans:[6,12]},
+{id:11,name:'Brukt bybil',category:'Bil',price:89900,oldPrice:99900,emoji:'🚗',badge:'10 000 AV!',urgency:'Klar for prøvekjøring',deferFee:2490,plans:[12,24,36]},
+{id:12,name:'Elbil – kompakt',category:'Bil',price:189900,oldPrice:209900,emoji:'🔋',badge:'PRISKUTT!',urgency:'Kampanje denne uken',deferFee:3990,plans:[12,24,36]},
 {id:13,name:'Helgetur til storby',category:'Reise',price:4490,oldPrice:5990,emoji:'✈️',badge:'WEEKEND DEAL',urgency:'Få plasser til denne prisen',deferFee:249,plans:[3,6,12]},
 {id:14,name:'Solferie – 1 uke',category:'Reise',price:9990,oldPrice:12990,emoji:'🏖️',badge:'SPAR 3 000!',urgency:'Bestillingsfrist snart',deferFee:499,plans:[3,6,12]},
 {id:15,name:'Konsertbillett',category:'Opplevelser',price:1190,oldPrice:1490,emoji:'🎫',badge:'HOT!',urgency:'Begrenset antall billetter',deferFee:79,plans:[3,6]},
 {id:16,name:'Pro gamingstol RGB',category:'Gaming',price:3490,oldPrice:4490,emoji:'🪑',badge:'GAMER DEAL',urgency:'Kun 4 igjen',deferFee:199,plans:[3,6,12]}
 ];
-const fees={3:99,6:249,12:599},money=n=>new Intl.NumberFormat('nb-NO',{style:'currency',currency:'NOK',maximumFractionDigits:0}).format(n);
+const fees={3:99,6:249,12:599,24:599,36:699},simpleRates={24:0.06,36:0.08},money=n=>new Intl.NumberFormat('nb-NO',{style:'currency',currency:'NOK',maximumFractionDigits:0}).format(n);
 let cart={},payment={},filter='Alle';
 function effRate(price,months,fee){const pay=(price+fee)/months;let lo=0,hi=2;for(let k=0;k<90;k++){const r=(lo+hi)/2;let pv=0;for(let t=1;t<=months;t++)pv+=pay/Math.pow(1+r,t);if(pv>price)lo=r;else hi=r}const monthly=(lo+hi)/2;return (Math.pow(1+monthly,12)-1)*100}
 function choice(p){return payment[p.id]??'now'}
-function unitTotal(p){const c=choice(p);return c==='defer'?p.price+p.deferFee:typeof c==='number'?p.price+(fees[c]||0):p.price}
+function interestCost(price,months){
+const rate=simpleRates[months]||0;
+return price*rate*(months/12);
+}
+function unitTotal(p){const c=choice(p);return c==='defer'? p.price+p.deferFee: typeof c==='number'? p.price+(fees[c]||0)+interestCost(p.price,c): p.price;}
 function renderFilters(){const cats=['Alle',...new Set(products.map(p=>p.category))];document.getElementById('filters').innerHTML=cats.map(c=>`<button class="${filter===c?'active':''}" data-filter="${c}">${c}</button>`).join('');document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;render()})}
-function renderProducts(){const list=filter==='Alle'?products:products.filter(p=>p.category===filter);document.getElementById('products').innerHTML=list.map(p=>{const c=choice(p);return `<article class="card"><div class="badge">${p.badge}</div><div class="pic">${p.emoji}</div><div class="info"><div class="cat">${p.category}</div><h2 class="name">${p.name}</h2><span class="price">${money(p.price)}</span><span class="old">${money(p.oldPrice)}</span><div class="urgency">⏱ ${p.urgency}</div><div class="payment"><div class="paybox ${c==='now'?'selected':''}"><label><input type="radio" name="pay${p.id}" ${c==='now'?'checked':''} onclick="selectPay(${p.id},'now')"> Kjøp nå</label><b style="float:right">${money(p.price)}</b></div><div class="paybox ${c==='defer'?'selected':''}"><label><input type="radio" name="pay${p.id}" ${c==='defer'?'checked':''} onclick="selectPay(${p.id},'defer')"> Betal senere</label><div class="small">Total ${money(p.price+p.deferFee)}, inkl. gebyr ${money(p.deferFee)}</div></div><div class="paybox"><b>Delbetaling</b><div class="plans">${p.plans.map(m=>`<button class="plan ${c===m?'selected':''}" onclick="selectPay(${p.id},${m})">${m} mnd: ${money(Math.ceil((p.price+fees[m])/m))}/mnd</button>`).join('')}</div>${typeof c==='number'?`<div class="detail"><b>${c} måneders delbetaling</b><br>Totalpris: <b>${money(p.price+fees[c])}</b><br>Gebyr: <b>${money(fees[c])}</b><br>Effektiv rente: <b>${effRate(p.price,c,fees[c]).toFixed(1).replace('.',',')} % per år</b><br><span class="small">Beregnet fra kontantpris og like månedlige betalinger.</span></div>`:''}</div></div><button class="buy" onclick="change(${p.id},1)">KJØP NÅ</button></div></article>`}).join('')}
+function renderProducts(){const list=filter==='Alle'?products:products.filter(p=>p.category===filter);document.getElementById('products').innerHTML=list.map(p=>{const c=choice(p);return `<article class="card"><div class="badge">${p.badge}</div><div class="pic">${p.emoji}</div><div class="info"><div class="cat">${p.category}</div><h2 class="name">${p.name}</h2><span class="price">${money(p.price)}</span><span class="old">${money(p.oldPrice)}</span><div class="urgency">⏱ ${p.urgency}</div><div class="payment"><div class="paybox ${c==='now'?'selected':''}"><label><input type="radio" name="pay${p.id}" ${c==='now'?'checked':''} onclick="selectPay(${p.id},'now')"> Kjøp nå</label><b style="float:right">${money(p.price)}</b></div><div class="paybox ${c==='defer'?'selected':''}"><label><input type="radio" name="pay${p.id}" ${c==='defer'?'checked':''} onclick="selectPay(${p.id},'defer')"> Betal senere</label><div class="small">Total ${money(p.price+p.deferFee)}, inkl. gebyr ${money(p.deferFee)}</div></div><div class="paybox"><b>Delbetaling</b><div class="plans">${p.plans.map(m=>`<button class="plan ${c===m?'selected':''}" onclick="selectPay(${p.id},${m})">${m} mnd: ${money(Math.ceil((p.price+fees[m]+interestCost(p.price,m))/m))}/mnd</button>`).join('')}</div>${typeof c==='number'?`<div class="detail"><b>${c} måneders delbetaling</b><br>Totalpris: <b>${money(p.price+fees[c]+interestCost(p.price,c))}</b><br>Gebyr: <b>${money(fees[c])}</b><br>${simpleRates[c] ? `Renter: <b>${money(interestCost(p.price,c))}</b><br>Forenklet årlig rente: <b>${(simpleRates[c]*100).toFixed(0)} %</b><br>` : ''}<br><span class="small">Beregnet fra kontantpris og like månedlige betalinger.</span></div>`:''}</div></div><button class="buy" onclick="change(${p.id},1)">KJØP NÅ</button></div></article>`}).join('')}
 function selectPay(id,v){payment[id]=v;renderProducts();renderCart()}
 function change(id,d){cart[id]=Math.max(0,(cart[id]||0)+d);renderCart()}
-function renderCart(){const chosen=products.filter(p=>cart[p.id]);document.getElementById('cartCount').textContent=Object.values(cart).reduce((a,b)=>a+b,0);document.getElementById('cartItems').innerHTML=chosen.length?chosen.map(p=>`<div class="item"><span style="font-size:28px">${p.emoji}</span><div><b>${p.name}</b><div class="small">Valgt totalpris: ${money(unitTotal(p))} per stk.</div></div><div class="qty"><button onclick="change(${p.id},-1)">−</button> <b>${cart[p.id]}</b> <button onclick="change(${p.id},1)">+</button></div></div>`).join(''):'<p class="small">Kurven er tom. Men tilbudene venter!</p>';document.getElementById('total').textContent=money(chosen.reduce((s,p)=>s+unitTotal(p)*cart[p.id],0))}
+function renderCart(){const chosen=products.filter(p=>cart[p.id]);document.getElementById('cartCount').textContent=Object.values(cart).reduce((a,b)=>a+b,0);document.getElementById('cartItems').innerHTML=chosen.length?chosen.map(p=>`<div class="item"><span style="font-size:28px">${p.emoji}</span><div><b>${p.name}</b><div class="small">Valgt totalpris: ${money(unitTotal(p))} per stk.</div></div><div class="qty"><button onclick="change(${p.id},-1)">−</button> <b>${cart[p.id]}</b> <button onclick="change(${p.id},1)">+</button></div></div>`).join(''):'<p class="small">Kurven er tom. Men tilbudene venter!</p>';document.getElementById('total').textContent=money(chosen.reduce((s,p)=>s+unitTotal(p)*cart[p.id],0));
+document.getElementById('saving').textContent=money(chosen.reduce((s,p)=>s+(p.oldPrice-p.price)*cart[p.id],0));}
 function render(){renderFilters();renderProducts();renderCart()}
 document.getElementById('cartBtn').onclick=()=>document.getElementById('overlay').classList.add('open');document.getElementById('close').onclick=()=>document.getElementById('overlay').classList.remove('open');document.getElementById('overlay').onclick=e=>{if(e.target.id==='overlay')e.currentTarget.classList.remove('open')};render();
 </script>
